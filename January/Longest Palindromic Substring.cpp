@@ -25,7 +25,6 @@ public:
                 left=l;
             }
         }
-        
         return s.substr(left,mx);
     }
 };
