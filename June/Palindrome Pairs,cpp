@@ -1,0 +1,46 @@
+class Solution {
+public:
+    
+     bool pal(string s)
+     {
+         int i=0;
+         int j=s.length()-1; 
+         while(i<j)
+         {
+             if(s[i++]!=s[j--]) 
+                 return false;
+         }
+         return true;
+     }
+    
+    vector<vector<int>> palindromePairs(vector<string>& words) {
+        vector<vector<int>>ans;
+        int n=words.size();
+        unordered_map<string,int>m;
+        for(int i=0;i<n;i++)
+        {
+            string temp=words[i];
+            reverse(temp.begin(),temp.end());
+            m[temp]=i;
+        }
+        for(int i=0;i<n;i++)
+        {
+            string s=words[i];
+            for(int j=0;j<s.length();j++)
+            {
+                string left=s.substr(0,j);
+                string right=s.substr(j,s.length()-j);
+                if(m.count(left) && pal(right) && m[left]!=i)
+                {
+                    ans.push_back({i,m[left]});
+                    if(left.empty())
+                         ans.push_back({m[left],i});
+                }
+                
+                if(m.count(right) && pal(left) && m[right]!=i)
+                     ans.push_back({m[right],i});
+            }
+        }
+        return ans;
+    }
+};
